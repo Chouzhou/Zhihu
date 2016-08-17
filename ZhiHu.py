@@ -1,4 +1,6 @@
 # -*- coding:utf-8 -*-
+# import asyncio
+
 __author__ = 'Jack'
 import cookielib
 import re, urllib, urllib2
@@ -34,9 +36,21 @@ class Zhuhu(object):
         try:
             request = urllib2.Request(self.baseUrl, self.loginPostData, self.loginHeaders)
             request1 = urllib2.Request(self.loginUrl)
+            # request2 = urllib2.Request('https://www.zhihu.com/people/zhu-shi-wen-11')
             result = self.opener.open(request)
             result = self.opener.open(request1)
+            # result = self.opener.open(request2)
+            self.second(result)
 
+            # print result.read().decode('utf-8')
+        except urllib2.URLError, e:
+            print '错误原因', e.reason
+    @asyncio.coroutine
+    def second(self, result):
+        try:
+            # result = result
+            request1 = urllib2.Request(self.loginUrl)
+            result = self.opener.open(request1)
             print result.read().decode('utf-8')
         except urllib2.URLError, e:
             print '错误原因', e.reason
